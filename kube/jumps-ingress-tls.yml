@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jumps-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "gce"
+spec:
+  tls:
+  - hosts:
+    - jumps.io
+    - www.jumps.io
+    secretName: jumps-tls
+  backend:
+    serviceName: jumps
+    servicePort: 81
+  rules:
+  - host: jumps.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: jumps
+          servicePort: 81
+  - host: www.jumps.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: jumps
+          servicePort: 81

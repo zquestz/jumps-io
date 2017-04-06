@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jumps
+  namespace: default
+spec:
+  ports:
+    - port: 81
+      targetPort: 8080
+  selector:
+    service: jumps
+  type: NodePort
