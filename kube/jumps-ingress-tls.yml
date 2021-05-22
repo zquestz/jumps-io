@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: jumps-ingress
@@ -12,21 +12,29 @@ spec:
     - jumps.io
     - www.jumps.io
     secretName: jumps-tls
-  backend:
-    serviceName: jumps
-    servicePort: 81
+  defaultBackend:
+    service:
+      name: jumps
+      port:
+        number: 81
   rules:
   - host: jumps.io
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
-          serviceName: jumps
-          servicePort: 81
+          service:
+            name: jumps
+            port:
+              number: 81
   - host: www.jumps.io
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
-          serviceName: jumps
-          servicePort: 81
+          service:
+            name: jumps
+            port:
+              number: 81
